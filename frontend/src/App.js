@@ -9,12 +9,20 @@ import {
   EditOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import { Avatar, Menu, Button, Layout, Card } from "antd";
+import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
+import CardPost from "./components/CardPost";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
 function App() {
+  let postinfo = {
+    title: "Task",
+
+    description:
+      "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough, the next logical step is to find a random paragraph. We created the Random Paragraph Generator with you in mind. The process is quite simple. Choose the number of random paragraphs you'd like to see and click the button. Your chosen number of paragraphs will instantly appear.If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough, the next logical step is to find a random paragraph. We created the Random Paragraph Generator with you in mind. The process is quite simple. Choose the number of random paragraphs you'd like to see and click the button. Your chosen number of paragraphs will instantly appear.",
+    location: "Bullet Hole",
+  };
   return (
     <Layout>
       <Sider
@@ -25,6 +33,14 @@ function App() {
         }}
         onCollapse={(collapsed, type) => {
           console.log(collapsed, type);
+        }}
+        style={{
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
+          top: 0,
+          bottom: 0,
         }}
       >
         <div className="demo-logo-vertical" />
@@ -44,8 +60,15 @@ function App() {
           }))}
         />
       </Sider>
-      <Layout>
-        <Content style={{ margin: "24px 16px 0" }}>
+      <Layout style={{ marginLeft: 200 }}>
+        <Content
+          style={{
+            margin: "24px 16px 0",
+            top: 0,
+            bottom: 0,
+            // position: "fixed",
+          }}
+        >
           <div
             style={{
               padding: 24,
@@ -53,26 +76,12 @@ function App() {
               background: "white",
             }}
           >
-            <Button>Hello</Button>
-            <Card
-              style={{ width: 300, marginTop: 16 }}
-              actions={[
-                <SettingOutlined key="setting" />,
-                <EditOutlined key="edit" />,
-                <EllipsisOutlined key="ellipsis" />,
-              ]}
-            >
-              <Meta
-                avatar={
-                  // <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
-                  <UserOutlined />
-                }
-                title="Card title"
-                description="This is the description"
-              />
-            </Card>
-            <Card style={{ width: 300, marginTop: 16 }}></Card>
+            <CardPost postinfo={postinfo} />
+            <CardPost postinfo={postinfo} />
+            <CardPost postinfo={postinfo} />
+            <CardPost postinfo={postinfo} />
           </div>
+          <FloatButton onClick={() => console.log("click")} />
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Yashaswe, Sanij, Truc, Prabesh

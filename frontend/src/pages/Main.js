@@ -20,80 +20,36 @@ export default function Main() {
     location: "Bullet Hole",
   };
   return (
-    <Layout>
-      <Sider
-        breakpoint="lg"
-        collapsedWidth="0"
-        onBreakpoint={(broken) => {
-          console.log(broken);
-        }}
-        onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
-        }}
+    <Content
+      style={{
+        margin: "24px 16px 0",
+        top: 0,
+        bottom: 0,
+        // position: "fixed",
+      }}
+    >
+      <div
         style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0,
-          top: 0,
-          bottom: 0,
+          padding: 24,
+          minHeight: 360,
+          background: "white",
         }}
       >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={["1"]}
-          items={[
-            { name: "Emergency", icon: <UserOutlined /> },
-            { name: "Find Task" },
-            { name: "Profile", icon: <UserOutlined /> },
-            { name: "Inbox", icon: <MessageOutlined /> },
-            { name: "New Post", icon: <PlusOutlined /> },
-          ].map((nav, index) => ({
-            key: String(index + 1),
-            icon: nav.icon,
-            label: nav.name,
-          }))}
+        <CardPost postinfo={postinfo} />
+        <CardPost postinfo={postinfo} />
+        <CardPost postinfo={postinfo} />
+        <CardPost postinfo={postinfo} />
+      </div>
+      {/* <FloatButton onClick={() => console.log("click")} /> */}
+      <Link to="/newhelp">
+        <FloatButton
+          className="addPost"
+          icon={<PlusOutlined />}
+          type="primary"
+          style={{ right: 100, width: 60, height: 60 }}
+          tooltip={<div>New Help</div>}
         />
-      </Sider>
-      <Layout style={{ marginLeft: 200 }}>
-        <Content
-          style={{
-            margin: "24px 16px 0",
-            top: 0,
-            bottom: 0,
-            // position: "fixed",
-          }}
-        >
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: "white",
-            }}
-          >
-            <CardPost postinfo={postinfo} />
-            <CardPost postinfo={postinfo} />
-            <CardPost postinfo={postinfo} />
-            <CardPost postinfo={postinfo} />
-          </div>
-          {/* <FloatButton onClick={() => console.log("click")} /> */}
-          <Link to="/newhelp">
-            <FloatButton
-              className="addPost"
-              icon={<PlusOutlined />}
-              type="primary"
-              style={{ right: 100, width: 60, height: 60 }}
-              tooltip={<div>New Help</div>}
-            />
-          </Link>
-        </Content>
-        <Footer style={{ textAlign: "center" }}>
-          Yashaswe, Sanij, Truc, Prabesh
-        </Footer>
-      </Layout>
-      <Outlet />
-    </Layout>
+      </Link>
+    </Content>
   );
 }

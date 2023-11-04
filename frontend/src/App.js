@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useState } from "react";
 import {
   UploadOutlined,
   UserOutlined,
@@ -11,6 +11,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
 import CardPost from "./components/CardPost";
+import { PlusOutlined } from '@ant-design/icons';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
@@ -81,7 +82,8 @@ function App() {
             <CardPost postinfo={postinfo} />
             <CardPost postinfo={postinfo} />
           </div>
-          <FloatButton onClick={() => console.log("click")} />
+          {/* <FloatButton onClick={() => console.log("click")} /> */}
+          <FloatButton className="addPost" icon={<PlusOutlined />} type="primary" style={{ right: 100, width: 80, height: 80}} tooltip={<div>New Help</div>} />
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Yashaswe, Sanij, Truc, Prabesh

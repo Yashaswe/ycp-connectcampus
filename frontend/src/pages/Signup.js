@@ -2,12 +2,27 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Input, Button, Upload } from 'antd';
 import { UserOutlined, LockOutlined, MailOutlined, UploadOutlined } from '@ant-design/icons';
+import axios from 'axios'
 
 
 export default function Signup() {
 
-    const onFinish = values => {
-        console.log('Received values of form: ', values);
+    const onFinish = async(values)=> {
+        try{
+          const response=await axios.post("/authentication/signup",{
+            "email":values.email,
+            "name":values.name,
+            "password":values.password
+          });
+
+          const token = response.data.token
+          //store 
+        
+        } catch(err){
+          console.log(err)
+        }
+
+  
       };
       
       const normFile = (e) => {

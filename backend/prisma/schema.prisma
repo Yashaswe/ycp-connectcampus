@@ -6,12 +6,14 @@ generator client {
 }
 
 datasource db {
-  provider = "mongodb"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+
+
 model User {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  id                String   @id @default(uuid())
   name              String
   email             String   @unique
   password          String
@@ -23,17 +25,17 @@ model User {
 }
 
 model Order{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  buyerId String @db.ObjectId
+  id String @id @default(uuid())
+  buyerId String
   buyer User @relation(fields: [buyerId],references: [id])
-  productId String @unique @db.ObjectId
+  productId String @unique
   product Product @relation(fields: [productId],references: [id])
 
 }
 
 model Product {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  userId         String @db.ObjectId
+  id                 String     @id @default(uuid())
+  userId         String
   author             User       @relation(fields: [userId], references: [id])
   title              String
   description        String
@@ -46,7 +48,7 @@ model Product {
 
 
 model Emergency{
-  id String @id @default(auto()) @map("_id") @db.ObjectId
+  id String @id @default(uuid())
   departmentName String
   phoneNumber String
 }

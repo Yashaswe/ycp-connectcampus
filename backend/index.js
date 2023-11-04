@@ -1,14 +1,14 @@
 const express=require("express");
-const helmet=require("helmet");
 const dotenv=require("dotenv");
 const cookieParser = require("cookie-parser");
+
+
 
 dotenv.config();
 const app=express();
 
 const verifyJWT= require("./middleware/verifyJWT")
 
-app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({
     extended:false
@@ -36,3 +36,6 @@ app.get("/products",(req,res)=>{
 app.listen(port,()=>{
     console.log(`Server running at Port ${port}`);
 })
+
+
+

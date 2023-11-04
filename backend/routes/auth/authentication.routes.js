@@ -8,7 +8,7 @@ const {upload,uploadImage}=require("../../middleware/imageUploader");
 router.route("/login").post(loginUser)
 
 
-router.route("/signup").post(upload.single('image'),uploadImage,createUser)
+router.route("/signup").post(createUser)
 
 
 module.exports=router;

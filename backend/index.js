@@ -9,16 +9,16 @@ dotenv.config();
 const app=express();
 
 
+//cross-site
 app.use(cors({
-    origin:["*"],
-    methods:["GET","POST","PUT","DELETE"],
-    credentials:true
+  origin:["*"],
+  methods:["GET","POST","PUT","DELETE"],
+  credentials:true
 }));
 
+
 app.use(express.json());
-app.use(express.urlencoded({
-    extended:false
-}));
+app.use(express.urlencoded({extended:false}));
 
 const authRouter=require("./routes/auth/authentication.routes");
 const productRouter=require("./routes/products/products.routes")
@@ -36,12 +36,8 @@ app.use("/products",productRouter)
 app.use("/emergencies", emergencyRouter);
 
 
-const server=http.createServer(app);
-server.listen(port)
-
-server.on("listening",()=>{
-    console.log(`Listening on port:${port}`)
+app.listen(port,()=>{
+  console.log(`Server running at PORT ${port}`)
 })
-
 
 

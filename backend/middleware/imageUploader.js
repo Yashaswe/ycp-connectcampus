@@ -28,8 +28,11 @@ const uploadImage=(req,res,next)=>{
         Readable.from(req.file.buffer).pipe(response);
         
     }catch(err){
-        res.status(500);
-        res.send("First Error");
+        res.status(404);
+        res.json({
+            "message":err
+        });
+        return;
     }
 }
 

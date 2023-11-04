@@ -10,6 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 model User {
   id                String   @id @default(uuid())
   name              String
@@ -17,24 +19,36 @@ model User {
   password          String
   registration_date DateTime @default(now())
   user_updated      DateTime @updatedAt
-  posts             Post[]
+  year              String
+  orders        Order[]
+  products      Product[]
 }
 
-model Buyer {
-  userId             String
-  user
+model Order{
+  id String @id @default(uuid())
+  buyerId String
+  buyer User @relation(fields: [buyerId],references: [id])
+  productId String @unique
+  product Product @relation(fields: [productId],references: [id])
+
 }
 
-model Post {
+model Product {
   id                 String     @id @default(uuid())
-  authorId           String
-  author             User       @relation(fields: [authorId], references: [id])
+  userId         String
+  author             User       @relation(fields: [userId], references: [id])
   title              String
   description        String
   price              Float
   date_listed        DateTime   @default(now())
   isAccepted         Boolean
-  category           String[]
-  // acceptedUserId     String
-  // acceptedUser       User?      @relation(fields: [acceptedUserId], references: [id])
+  category           String
+  order               Order?
+}
+
+
+model Emergency{
+  id String @id @default(uuid())
+  departmentName String
+  phoneNumber String
 }

@@ -3,14 +3,14 @@ import { EnvironmentFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Tag, Typography } from "antd";
 
 const { Meta } = Card;
-const { Text } = Typography;
+const { Text, Paragraph } = Typography;
 
 const CardPost = ({ postinfo }) => {
-  const [showMore, setShowMore] = useState(false);
-
-  const toggleShowMore = () => {
+  const [showMore, setShowMore] = useState(true);
+  const handleExpand = () => {
     setShowMore(!showMore);
   };
+
   if (!postinfo) return <></>;
   return (
     <Card
@@ -38,20 +38,29 @@ const CardPost = ({ postinfo }) => {
               <EnvironmentFilled style={{ color: "#ea4335" }} />
               {postinfo.location}
             </p>
-            <Text
-              ellipsis={!showMore}
-              style={{ overflow: "hidden", textOverflow: "ellipsis" }}
+            <Paragraph
+              ellipsis={{
+                rows: showMore ? 3 : 0,
+                symbol: "",
+              }}
             >
               {postinfo.description}
-            </Text>
-            {postinfo.description.length > 354 && (
-              <button onClick={toggleShowMore}>
-                {showMore ? "Show Less" : "Show More"}
-              </button>
+            </Paragraph>
+            {postinfo.description.length > 300 && (
+              <Text
+                onClick={handleExpand}
+                style={{
+                  color: "blue", // Link color
+                  border: "none",
+                  background: "transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {showMore ? "Show More" : "Show Less"}
+              </Text>
             )}
           </div>,
         ]}
-        style={{ height: 200 }}
       />
 
       <Button type="primary" style={{ float: "right" }}>

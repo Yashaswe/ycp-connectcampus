@@ -3,8 +3,6 @@ const helmet=require("helmet");
 const dotenv=require("dotenv");
 const cookieParser = require("cookie-parser");
 
-
-
 dotenv.config();
 const app=express();
 

@@ -4,10 +4,11 @@ const bcrypt=require("bcrypt");
 const Prisma=require("../../utils/prisma")
 
 const createUser=async(req,res)=>{
-    const firstName=req.body.firstName;
-    const lastName=req.body.lastName;
+    const name=req.body.name;
     const email=req.body.email;
     const password=req.body.password
+    const year=req.body.year;
+
 
     const hashedPassword= await bcrypt.hash(password,10)
     const foundEmail=await Prisma.user.findFirst({
@@ -25,15 +26,25 @@ const createUser=async(req,res)=>{
     }else{
         const user=await Prisma.user.create({
             data:{
-                firstName:firstName,
-                lastName:lastName,
+                name:name,
                 email:email,
-                password:hashedPassword
+                password:hashedPassword,
+                year:year
             }
         })
-    
+
+        //Generating an access-token
+        const accessToken=jwt.sign({
+            _id:user.id,
+        },
+
+        process.env.ACCESS_TOKEN_SECRET,
+        {
+            'expiresIn':'30d'
+        });
         res.status(200)
         res.json({
+            "token":accessToken,
             "message": "Successfully Created an Account"
         })
     }
@@ -65,26 +76,9 @@ const loginUser=async(req,res)=>{
             },
             process.env.ACCESS_TOKEN_SECRET,
             {
-                'expiresIn':'15m'
+                'expiresIn':'30d'
             });
 
-            const refreshToken=jwt.sign({
-                _id:foundUser.id
-            },process.env.REFRESH_TOKEN_SECRET,
-            {
-                expiresIn:"30d"
-            })
-
-            const updatedUser=await Prisma.user.update({
-                where:foundUser.id
-            },
-            {
-                data:{
-                    refreshToken:refreshToken
-                }
-            })
-            
-            res.cookie('jwt',refreshToken,{httpOnly:true,sameSite:'None',secure:true,maxAge:24*60*60*1000*30});
             res.status(200);
             res.json({
                 "accessToken":accessToken,

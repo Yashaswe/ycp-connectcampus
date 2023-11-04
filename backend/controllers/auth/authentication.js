@@ -1,13 +1,21 @@
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcrypt");
 
+const cloudinary=require("cloudinary").v2;
+
+cloudinary.config({
+    cloud_name:process.env.CLOUD_NAME,
+    api_key:process.env.API_KEY,
+    api_secret:process.env.API_SECRET
+});
+
 const Prisma=require("../../utils/prisma")
 
 const createUser=async(req,res)=>{
     const name=req.body.name;
     const email=req.body.email;
     const password=req.body.password
-    const year=req.body.year;
+    const coverImage=req.cloudinaryUrl
 
 
     const hashedPassword= await bcrypt.hash(password,10)
@@ -29,7 +37,7 @@ const createUser=async(req,res)=>{
                 name:name,
                 email:email,
                 password:hashedPassword,
-                year:year
+                profileImage:coverImage
             }
         })
 

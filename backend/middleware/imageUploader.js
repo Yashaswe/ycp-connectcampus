@@ -14,13 +14,12 @@ const upload=multer({storage:storage});
 const uploadImage=(req,res,next)=>{
     try{
         const response= cloudinary.uploader.upload_stream({
-            folder:"Books_Images"
+            folder:"Profile_Images"
         },(err,result)=>{
             if(err){
                 res.status(500)
                 res.send("Second Error");
             }else{
-                req.publicId=result.public_id
                 req.cloudinaryUrl=result.url;
                 next()
             }

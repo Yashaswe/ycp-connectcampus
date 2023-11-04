@@ -11,7 +11,6 @@ datasource db {
 }
 
 
-
 model User {
   id                String   @id @default(uuid())
   name              String
@@ -19,7 +18,6 @@ model User {
   password          String
   registration_date DateTime @default(now())
   user_updated      DateTime @updatedAt
-  year              String
   orders        Order[]
   products      Product[]
   profileImage  String @default("https://i.shgcdn.com/acf85e2d-e3ed-4175-8cee-bb49bb8aca13/-/format/auto/-/preview/3000x3000/-/quality/lighter/")
@@ -44,7 +42,7 @@ model Product {
   date_listed        DateTime   @default(now())
   isAccepted         Boolean    @default(false)
   category           String
-  order               Order?
+  order              Order?
 }
 
 

@@ -1,6 +1,7 @@
 const express=require("express");
 const dotenv=require("dotenv");
 const cors=require("cors")
+const http=require("http")
 
 
 
@@ -8,7 +9,12 @@ dotenv.config();
 const app=express();
 
 
-app.use(cors());
+app.use(cors({
+    origin:["*"],
+    methods:["GET","POST","PUT","DELETE"],
+    credentials:true
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({
     extended:false
@@ -26,8 +32,11 @@ app.use("/products",productRouter)
 
 
 
-app.listen(port,()=>{
-    console.log(`Server running at Port ${port}`);
+const server=http.createServer(app);
+server.listen(port)
+
+server.on("listening",()=>{
+    console.log(`Listening on port:${port}`)
 })
 
 

@@ -10,6 +10,8 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+
 model User {
   id                String   @id @default(uuid())
   name              String
@@ -20,6 +22,7 @@ model User {
   year              String
   orders        Order[]
   products      Product[]
+  profileImage  String
 }
 
 model Order{
@@ -39,7 +42,7 @@ model Product {
   description        String
   price              Float
   date_listed        DateTime   @default(now())
-  isAccepted         Boolean
+  isAccepted         Boolean    @default(false)
   category           String
   order               Order?
 }

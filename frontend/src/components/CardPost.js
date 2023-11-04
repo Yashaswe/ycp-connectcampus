@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { EnvironmentFilled } from "@ant-design/icons";
-import { Avatar, Button, Card, Tag, Typography } from "antd";
+import { Avatar, Button, Card, Tag, Typography, Flex } from "antd";
 
 const { Meta } = Card;
 const { Text, Paragraph } = Typography;
@@ -31,7 +31,12 @@ const CardPost = ({ postinfo }) => {
           <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
           // <UserOutlined />
         }
-        title={postinfo.title}
+        title={
+          <Flex justify={"space-between"}>
+            <div>{postinfo.title}</div>
+            <div>${postinfo.price}</div>
+          </Flex>
+        }
         description={[
           <div>
             <p>

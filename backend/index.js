@@ -17,12 +17,14 @@ app.use(express.urlencoded({
 app.use(cookieParser());
 
 const authRouter=require("./routes/auth/authentication.routes");
+const productRouter=require("./routes/products/products.routes")
 
 const port=process.env.PORT||8080;
 
 
 //add the routes
 app.use("/authentication",authRouter);
+app.use("/products",productRouter)
 
 app.use(verifyJWT)
 app.get("/products",(req,res)=>{

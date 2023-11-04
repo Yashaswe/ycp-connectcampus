@@ -9,7 +9,7 @@ const verifyJWT=(req,res,next)=>{
             token,
             process.env.ACCESS_TOKEN_SECRET,
         )
-        req.userId=
+        console.log(decoded)
         next()
     }catch(err){
         return null;

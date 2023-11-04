@@ -10,8 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 model User {
   id                String   @id @default(uuid())
   name              String
@@ -22,7 +20,7 @@ model User {
   year              String
   orders        Order[]
   products      Product[]
-  profileImage  String
+  profileImage  String @default("https://i.shgcdn.com/acf85e2d-e3ed-4175-8cee-bb49bb8aca13/-/format/auto/-/preview/3000x3000/-/quality/lighter/")
 }
 
 model Order{
@@ -36,7 +34,7 @@ model Order{
 
 model Product {
   id                 String     @id @default(uuid())
-  userId         String
+  userId             String
   author             User       @relation(fields: [userId], references: [id])
   title              String
   description        String

@@ -9,6 +9,7 @@ import NewHelp from "./NewHelp";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import Main from "./Main";
 import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
+import { StreamChat } from 'stream-chat';
 
 const { Header, Content, Footer, Sider } = Layout;
 const UserPage = () => {
@@ -22,6 +23,8 @@ const UserPage = () => {
   const authToken = localStorage.getItem("authToken");
   const navigate = useNavigate();
   console.log(authToken, "TOKEN");
+  const apiKey = "48kmaj4gqgva";
+  const chatClient = StreamChat.getInstance(apiKey);
 
   useEffect(() => {
     if (!authToken) {
@@ -63,7 +66,9 @@ const UserPage = () => {
           </Menu>
           <Button
             onClick={() => {
+              chatClient.disconnectUser()
               localStorage.clear();
+
               navigate("/signup");
             }}
             icon={<LogoutOutlined style={{ color: "red" }} />}
@@ -81,10 +86,10 @@ const UserPage = () => {
         </Sider>
         <Layout style={{ marginLeft: 200 }}>
           <Outlet />
-          <Footer style={{ textAlign: "center" }}>
-            Developed by Yashaswe, Sanij, Thuc, Prabesh
-            @Gettysburg College
-          </Footer>
+            {/* <Footer style={{ textAlign: "center" }}>
+              Developed by Yashaswe, Sanij, Thuc, Prabesh
+              @Gettysburg College
+            </Footer> */}
         </Layout>
       </Layout>
     </>

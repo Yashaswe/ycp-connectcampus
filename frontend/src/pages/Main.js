@@ -15,6 +15,7 @@ export default function Main() {
     try {
       const response = await axios.get("/products/all-products");
       setData(response.data.message);
+      console.log(response)
     } catch (err) {
       console.log(err);
     }

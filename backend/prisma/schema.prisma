@@ -42,6 +42,7 @@ model Product {
   isAccepted         Boolean    @default(false)
   category           String
   order               Order?
+  location         String @default("Hanson Hall")
 }
 
 

@@ -7,6 +7,7 @@ const createProduct=async(req,res)=>{
     const price=req.body.price;
     const token=req.body.token;
     const category=req.body.category;
+    const location=req.body.location
 
 
     const userId=verifyJWT(token)
@@ -24,6 +25,7 @@ const createProduct=async(req,res)=>{
                     title:title,
                     description:description,
                     price:price,
+                    
                     author:{
                         connect:{
                             id:currUser.id

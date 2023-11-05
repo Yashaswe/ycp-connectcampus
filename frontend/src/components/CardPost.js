@@ -74,7 +74,7 @@ const CardPost = ({ postinfo, data, handleClick }) => {
     >
       <Meta
         avatar={
-          <Avatar src="https://xsgames.co/randomusers/avatar.php?g=pixel&key=1" />
+          <Avatar src={postinfo.author.profileImage} />
           // <UserOutlined />
         }
         title={

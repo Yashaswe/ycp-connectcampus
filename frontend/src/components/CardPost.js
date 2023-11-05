@@ -7,7 +7,8 @@ const { Meta } = Card;
 const { Text, Paragraph } = Typography;
 
 
-const CardPost = ({ postinfo, data }) => {
+const CardPost = ({ postinfo, data ,handleClick}) => {
+  const [update,setUpdate]=useState(false)
   const categoryColor = {
     Pickup: "#f50",
     Medical: "#2db7f5",
@@ -15,14 +16,14 @@ const CardPost = ({ postinfo, data }) => {
     Pet: "#108ee9",
     Book: "#800080",
   };
-  const [showMore, setShowMore] = useState(true);
+  const [showMore, setShowMore] = useState(false);
   const handleExpand = () => {
     setShowMore(!showMore);
   };
 
   async function handleSubmit() {
 
-  
+    
     const productId = data.id;
     const productName = data.title;
     
@@ -32,7 +33,9 @@ const CardPost = ({ postinfo, data }) => {
         id:productId,
         token:token
       })
-
+      
+     
+      setUpdate(true)
       console.log(response.data)
     
 
@@ -41,9 +44,7 @@ const CardPost = ({ postinfo, data }) => {
     }
   }
 
-  useEffect(()=>{
 
-  },[])
 
   if (!postinfo) return <></>;
   return (
@@ -106,7 +107,9 @@ const CardPost = ({ postinfo, data }) => {
       />
       
       {
-        postinfo.isAccepted?<Button type="primary" style={{ float: "right" }} disabled>
+        update?<Button type="primary" style={{ float: "right" }} disabled>
+        Taken
+      </Button>:postinfo.isAccepted?<Button type="primary" style={{ float: "right" }} disabled>
         Taken
       </Button>:<Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
         Accept

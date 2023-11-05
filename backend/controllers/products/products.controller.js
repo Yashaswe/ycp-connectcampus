@@ -56,7 +56,18 @@ const createProduct=async(req,res)=>{
 
 
 const  getAllProducts=async(req,res)=>{
-    const products=await Prisma.product.findMany();
+    
+    const userId=verifyJWT(req.body.token)
+    
+    const products=await Prisma.product.findMany(
+        {
+            where:{
+                NOT:{
+                    userId:userId
+                }
+            }
+        }
+    );
     res.status(200);
     res.json({
         "message":products
@@ -122,7 +133,7 @@ const updateProducts=async(req,res)=>{
         }
     })
 
-    console.log(user.name)
+   
 
    
     if(productId){

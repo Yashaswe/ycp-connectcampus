@@ -14,7 +14,10 @@ import '@stream-io/stream-chat-css/dist/css/index.css';
 import { redirect } from 'react-router-dom';
 import Profile from './Profile'
 
-const apiKey = "48kmaj4gqgva";
+
+
+const Inbox = async() => {
+  const apiKey = "48kmaj4gqgva";
 
 const user = {
   id: localStorage.getItem("email").replace(/[^a-z0-9@]/g, ''),
@@ -39,8 +42,6 @@ await channel.watch();
 const filters = { type: 'messaging', members: {$in: [userId]}  };
 const options = { state: true, presence: true, limit: 10 };
 const sort = { last_message_at: -1, updated_at: -1 };
-
-const Inbox = () => (
   <Chat client={chatClient}>
     <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
     <Channel>
@@ -52,7 +53,7 @@ const Inbox = () => (
       <Thread />
     </Channel>
   </Chat>
-);
+};
 
 export default Inbox;
 //     useEffect(async() => {

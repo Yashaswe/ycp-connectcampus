@@ -10,18 +10,30 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
 export default function Main() {
+
   const [data, setData] = useState([]);
+  const [count, setCount] = useState(0);
+
+
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get("/products/all-products");
+      const response = await axios.post("/products/all-products",{
+        token:localStorage.getItem("authToken")
+      });
       setData(response.data.message);
     } catch (err) {
       console.log(err);
     }
   }, [data]);
+
+  const handleClick = () => {
+    // Update the state variable
+    setCount(count + 1);
+  };
+
   useEffect(() => {
     fetchData();
-  }, [setData]);
+  }, [setData,setCount]);
 
   return (
     <Content
@@ -40,7 +52,7 @@ export default function Main() {
       >
         {data.length > 0 ? (
           data.map((postinfo, index) => (
-            <CardPost postinfo={postinfo} data={data[index]} />
+            <CardPost handleClick={handleClick} key={postinfo.id} postinfo={postinfo} data={data[index]} />
           ))
         ) : (
           <>data is loading....</>

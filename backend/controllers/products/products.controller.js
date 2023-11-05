@@ -56,7 +56,18 @@ const createProduct=async(req,res)=>{
 
 
 const  getAllProducts=async(req,res)=>{
-    const products=await Prisma.product.findMany();
+    
+    const userId=verifyJWT(req.body.token)
+    
+    const products=await Prisma.product.findMany(
+        {
+            where:{
+                NOT:{
+                    userId:userId
+                }
+            }
+        }
+    );
     res.status(200);
     res.json({
         "message":products
@@ -100,6 +111,31 @@ const getAcceptedProducts=async(req,res)=>{
 
 const updateProducts=async(req,res)=>{
     const productId=req.body.id;
+    const token=req.body.token;
+    const userId=verifyJWT(token)
+    
+    const currUser=await Prisma.user.findFirst({
+        where:{
+            id:userId
+        }
+    })
+
+    const product=await Prisma.product.findFirst({
+        where:{
+            id:productId
+        }
+    })
+
+
+    const user=await Prisma.user.findFirst({
+        where:{
+            id:product.userId
+        }
+    })
+
+   
+
+   
     if(productId){
         const updatedProduct=await Prisma.product.update({
             where:{
@@ -108,6 +144,20 @@ const updateProducts=async(req,res)=>{
             data:{
                 isAccepted:true
             }
+        })
+
+        const order=await Prisma.order.create({
+            data:{
+                productId:product.id,
+                buyerId:currUser.id
+            }
+        })
+
+        res.status(200)
+        res.json({
+            "buyer":currUser.email,
+            "seller":user.email,
+            "message":"Successfully updated the product!"
         })
     }else{
         res.status(401);

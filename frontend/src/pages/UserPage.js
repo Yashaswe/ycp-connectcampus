@@ -15,7 +15,7 @@ const UserPage = () => {
   let menuData = [
     { name: "Emergency", link: "/" },
     { name: "Find Task", link: "/" },
-    { name: "Profile", icon: <UserOutlined /> },
+    { name: "Profile", link: "/profile", icon: <UserOutlined /> },
     { name: "Inbox", icon: <MessageOutlined /> },
     { name: "New Post", icon: <PlusOutlined />, link: "/newhelp" },
   ];

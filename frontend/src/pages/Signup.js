@@ -86,7 +86,7 @@ export default function Signup() {
             placeholder="Full name"
           />
         </Form.Item>
-        <Form.Item
+        {/* <Form.Item
           name="upload"
           label="Upload"
           valuePropName="fileList"
@@ -96,7 +96,7 @@ export default function Signup() {
           <Upload name="logo" action="/upload.do" listType="picture">
             <Button icon={<UploadOutlined />}>Click to upload</Button>
           </Upload>
-        </Form.Item>
+        </Form.Item> */}
         <Form.Item
           name="password"
           rules={[

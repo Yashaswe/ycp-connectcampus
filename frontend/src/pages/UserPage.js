@@ -13,10 +13,10 @@ import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
 const { Header, Content, Footer, Sider } = Layout;
 const UserPage = () => {
   let menuData = [
-    { name: "Emergency", link: "/" },
+    { name: "Emergency", link: "/emergency" },
     { name: "Find Task", link: "/" },
     { name: "Profile", link: "/profile", icon: <UserOutlined /> },
-    { name: "Inbox", icon: <MessageOutlined /> },
+    { name: "Inbox", icon: <MessageOutlined />, link: "/inbox" },
     { name: "New Post", icon: <PlusOutlined />, link: "/newhelp" },
   ];
   const authToken = localStorage.getItem("authToken");

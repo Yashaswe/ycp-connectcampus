@@ -5,7 +5,7 @@ const {createProduct, getAllProducts, getAcceptedProducts, updateProducts}=requi
 
 
 router.route("/create-product").post(createProduct)
-router.route("/all-products").get(getAllProducts)
+router.route("/all-products").post(getAllProducts)
 router.route("/accepted-products").get(getAcceptedProducts)
 router.route("/update-product").post(updateProducts)
 

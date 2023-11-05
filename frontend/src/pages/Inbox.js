@@ -11,9 +11,11 @@ import {
   Window,
 } from 'stream-chat-react';
 import '@stream-io/stream-chat-css/dist/css/index.css';
-import { redirect } from 'react-router-dom';
-import Profile from './Profile'
+import { Navigate, redirect , useNavigate} from 'react-router-dom';
+import Profile from './Profile' 
 
+const Inbox = () => {
+    
 const apiKey = "48kmaj4gqgva";
 
 const user = {
@@ -27,20 +29,19 @@ const chatClient = StreamChat.getInstance(apiKey);
 if (typeof window !== 'undefined') {
   chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
 }
-const channel = chatClient.channel('messaging', 'gfcch', {
-  name: 'Awesome channel about traveling',
-  members: [userId]
-});
-// Here, 'travel' will be the channel ID
-await channel.watch();
+// const channel = chatClient.channel('messaging', '', {
+//   name: 'Awesome channel about traveling',
+//   members: [userId]
+// });
+// // Here, 'travel' will be the channel ID
+// channel.watch();
 // if (process.env.REACT_APP_CHAT_SERVER_ENDPOINT) {
 //   chatClient.setBaseURL(process.env.REACT_APP_CHAT_SERVER_ENDPOINT);
 // }
 const filters = { type: 'messaging', members: {$in: [userId]}  };
 const options = { state: true, presence: true, limit: 10 };
 const sort = { last_message_at: -1, updated_at: -1 };
-
-const Inbox = () => (
+return (
   <Chat client={chatClient}>
     <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
     <Channel>
@@ -52,7 +53,7 @@ const Inbox = () => (
       <Thread />
     </Channel>
   </Chat>
-);
+)};
 
 export default Inbox;
 //     useEffect(async() => {

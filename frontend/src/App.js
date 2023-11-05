@@ -25,10 +25,12 @@ function App() {
           <Route path="/newhelp" element={<NewHelp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/emergency" element={<Emergency />} />
+          <Route path = "/inbox" element = {<Inbox />}/>
         </Route>
+
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
-        <Route path = "/inbox" element = {<Inbox />}/>
+        
       </Routes>
     </BrowserRouter>
   );

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { EnvironmentFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Tag, Typography, Flex } from "antd";
-import { Link } from "react-router-dom";
+import { StreamChat } from 'stream-chat';
+
+
 const { Meta } = Card;
+
 const { Text, Paragraph } = Typography;
 
 const CardPost = ({ postinfo, data }) => {
@@ -20,7 +23,21 @@ const CardPost = ({ postinfo, data }) => {
   function handleSubmit() {
     const productId = data.id;
     const productName = data.title;
+    console.log(data)
+    console.log(localStorage.getItem("email"))
     console.log(productId)
+    const apiKey = "48kmaj4gqgva";
+    const chatClient = StreamChat.getInstance(apiKey);
+    const userId = localStorage.getItem("email").replace(/[^a-z0-9@]/g, '')
+    if (typeof window !== 'undefined') {
+      chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
+    }
+    const channel = chatClient.channel('messaging', productId, {
+      name: 'Awesome channel about traveling',
+      members: [userId, data.userId]
+    });
+    // Here, 'travel' will be the channel ID
+    channel.watch();
   }
 
   if (!postinfo) return <></>;

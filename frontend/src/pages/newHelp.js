@@ -6,7 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router";
 
 export default function NewHelp() {
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   const [componentSize, setComponentSize] = useState("default");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -19,24 +19,24 @@ export default function NewHelp() {
     location: "",
   });
 
-  const onFinish = async() => {
+  const onFinish = async () => {
     // You can perform actions with the form data here, e.g., send it to a server.
     console.log("Form Data:", formData);
-    const token= localStorage.getItem("authToken")
-    const obj={
-      "title":formData.title,
-      "description":formData.description,
-      "price":formData.price,
-      "category":formData.category,
-      "token":token
-    }
-    try{
-      const response = await axios.post("/products/create-product",obj)
-      if(response){
-        navigate("/")
+    const token = localStorage.getItem("authToken");
+    const obj = {
+      title: formData.title,
+      description: formData.description,
+      price: formData.price,
+      category: formData.category,
+      token: token,
+    };
+    try {
+      const response = await axios.post("/products/create-product", obj);
+      if (response) {
+        navigate("/");
       }
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -45,7 +45,6 @@ export default function NewHelp() {
       ...formData,
       [key]: value,
     });
-
   };
   return (
     <Content
@@ -81,7 +80,6 @@ export default function NewHelp() {
           style={{
             maxWidth: 1000,
           }}
-
           onFinish={onFinish}
         >
           <Form.Item name="title">
@@ -114,7 +112,7 @@ export default function NewHelp() {
               <Select.Option value="Transportation">
                 Transportation
               </Select.Option>
-              <Select.Option value="Pet">Pet</Select.Option>
+              <Select.Option value="Pet">Pet Support</Select.Option>
               <Select.Option value="Book">Loan Book</Select.Option>
             </Select>
           </Form.Item>

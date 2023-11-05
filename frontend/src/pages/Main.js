@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
@@ -9,6 +9,15 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
 export default function Main() {
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get("/");
+      console.log(response);
+    } catch {}
+  });
+  useEffect(() => {
+    fetchData();
+  }, []);
   let postinfo = {
     title: "Task",
     price: 322.0,
@@ -25,7 +34,6 @@ export default function Main() {
         margin: "24px 16px 0",
         top: 0,
         bottom: 0,
-        // position: "fixed",
       }}
     >
       <div

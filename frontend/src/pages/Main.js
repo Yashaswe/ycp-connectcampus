@@ -1,14 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
 import CardPost from "../components/CardPost";
 import { PlusOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
 export default function Main() {
+  const [data, setData] = useState([]);
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get("/products/all-products");
+      setData(response.data.message);
+      console.log(response)
+    } catch (err) {
+      console.log(err);
+    }
+  }, [data]);
+  useEffect(() => {
+    fetchData();
+  }, [setData]);
   let postinfo = {
     title: "Task",
     price: 322.0,
@@ -25,7 +39,6 @@ export default function Main() {
         margin: "24px 16px 0",
         top: 0,
         bottom: 0,
-        // position: "fixed",
       }}
     >
       <div
@@ -35,12 +48,13 @@ export default function Main() {
           background: "white",
         }}
       >
-        <CardPost postinfo={postinfo} />
-        <CardPost postinfo={postinfo} />
-        <CardPost postinfo={postinfo} />
-        <CardPost postinfo={postinfo} />
+        {data.length > 0 ? (
+          data.map((postinfo) => <CardPost postinfo={postinfo} />)
+        ) : (
+          <>data is loading....</>
+        )}
       </div>
-      {/* <FloatButton onClick={() => console.log("click")} /> */}
+
       <Link to="/newhelp">
         <FloatButton
           className="addPost"

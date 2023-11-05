@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { EnvironmentOutlined, UserOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function NewHelp() {
+  const navigate = useNavigate();
   const [componentSize, setComponentSize] = useState("default");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -15,10 +18,28 @@ export default function NewHelp() {
     category: "",
     location: "",
   });
+  const fetchData = useCallback(async () => {});
 
-  const handleFormSubmit = () => {
+  const onFinish = async () => {
     // You can perform actions with the form data here, e.g., send it to a server.
     console.log("Form Data:", formData);
+    const token = localStorage.getItem("authToken");
+    const obj = {
+      title: formData.title,
+      description: formData.description,
+      price: formData.price,
+      category: formData.category,
+      token: token,
+      location:formData.location
+    };
+    try {
+      const response = await axios.post("/products/create-product", obj);
+      if (response) {
+        navigate("/");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleInputChange = (key, value) => {
@@ -61,6 +82,7 @@ export default function NewHelp() {
           style={{
             maxWidth: 1000,
           }}
+          onFinish={onFinish}
         >
           <Form.Item name="title">
             <Input
@@ -92,7 +114,7 @@ export default function NewHelp() {
               <Select.Option value="Transportation">
                 Transportation
               </Select.Option>
-              <Select.Option value="Pet">Pet</Select.Option>
+              <Select.Option value="Pet">Pet Support</Select.Option>
               <Select.Option value="Book">Loan Book</Select.Option>
             </Select>
           </Form.Item>

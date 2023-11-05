@@ -6,6 +6,13 @@ const { Meta } = Card;
 const { Text, Paragraph } = Typography;
 
 const CardPost = ({ postinfo }) => {
+  const categoryColor = {
+    Pickup: "#f50",
+    Medical: "#2db7f5",
+    Transportation: "#87d068",
+    Pet: "#108ee9",
+    Book: "#800080",
+  };
   const [showMore, setShowMore] = useState(true);
   const handleExpand = () => {
     setShowMore(!showMore);
@@ -16,8 +23,11 @@ const CardPost = ({ postinfo }) => {
     <Card
       style={{ width: 800, marginTop: 16 }}
       actions={[
-        <Tag color="#f50" style={{ float: "left", marginLeft: "10px" }}>
-          Tag 1
+        <Tag
+          color={categoryColor[postinfo.category]}
+          style={{ float: "left", marginLeft: "10px" }}
+        >
+          {postinfo.category}
         </Tag>,
       ]}
       // actions={[

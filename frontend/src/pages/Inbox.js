@@ -38,7 +38,7 @@ const filters = { type: 'messaging', members: {$in: [userId]}  };
 const options = { state: true, presence: true, limit: 10 };
 const sort = { last_message_at: -1, updated_at: -1 };
   
-const App = () => (
+const Inbox = () => (
   <Chat client={chatClient}>
     <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
     <Channel>
@@ -51,36 +51,5 @@ const App = () => (
     </Channel>
   </Chat>
 );
-import "./App.css";
-import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import Main from "./pages/Main";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { UserOutlined, MessageOutlined, PlusOutlined } from "@ant-design/icons";
-import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
 
-import NewHelp from "./pages/NewHelp";
-import Blogs from "./pages/Blogs";
-import Signup from "./pages/Signup";
-import Signin from "./pages/Signin";
-import UserPage from "./pages/UserPage";
-
-const { Meta } = Card;
-const { Header, Content, Footer, Sider } = Layout;
-function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<UserPage />}>
-          <Route path="/" element={<Main />} />
-          <Route path="/newhelp" element={<NewHelp />} />
-          <Route path="/blogs" element={<Blogs />} />
-        </Route>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-export default App;
+export default Inbox;

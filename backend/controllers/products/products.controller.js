@@ -7,47 +7,50 @@ const createProduct=async(req,res)=>{
     const price=req.body.price;
     const token=req.body.token;
     const category=req.body.category;
+    const location=req.body.location
 
-    const userId=verifyJWT(token)
-    if(userId){
-        //find the user
-        const currUser=await Prisma.user.findFirst({
-            where:{
-                id:userId
-            }
-        })
+    console.log("location: "+location)
+    // const userId=verifyJWT(token)
+    // if(userId){
+    //     //find the user
+    //     const currUser=await Prisma.user.findFirst({
+    //         where:{
+    //             id:userId
+    //         }
+    //     })
 
-        if(currUser){
-            const productCreated=await Prisma.product.create({
-                data:{
-                    title:title,
-                    description:description,
-                    price:price,
-                    author:{
-                        connect:{
-                            id:currUser.id
-                        }
-                    },
-                    category:category
-                }
-            })
-            res.status(200);
-            res.json({
-                "message":"successfully created the post"
-            })
-        }else{
-            res.status(401)
-            res.json({
-                "message":"Not Authorized"
-            })
-        }
+    //     if(currUser){
+    //         const productCreated=await Prisma.product.create({
+    //             data:{
+    //                 title:title,
+    //                 description:description,
+    //                 price:price,
+    //                 location:location,
+    //                 author:{
+    //                     connect:{
+    //                         id:currUser.id
+    //                     }
+    //                 },
+    //                 category:category
+    //             }
+    //         })
+    //         res.status(200);
+    //         res.json({
+    //             "message":"successfully created the post"
+    //         })
+    //     }else{
+    //         res.status(401)
+    //         res.json({
+    //             "message":"Not Authorized"
+    //         })
+    //     }
 
-    }else{
-        res.status(401);
-        res.json({
-            "message":"Not Authorized!"
-        })
-    }
+    // }else{
+    //     res.status(401);
+    //     res.json({
+    //         "message":"Not Authorized!"
+    //     })
+    // }
     
 }
 
@@ -84,4 +87,4 @@ const getProductsByCategory=async(req,res)=>{
 
 //delete the products
 
-module.exports = { createProduct }
+module.exports = { createProduct,getAllProducts }

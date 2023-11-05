@@ -1,13 +1,15 @@
 const express=require("express");
 const router=express.Router();
 
-const {createUser,loginUser}=require("../../controllers/auth/authentication")
+const {createUser,loginUser,getUserProfile}=require("../../controllers/auth/authentication")
 
 
 router.route("/login").post(loginUser)
 
 
 router.route("/signup").post(createUser)
+
+router.route("/user").get(getUserProfile)
 
 
 module.exports=router;

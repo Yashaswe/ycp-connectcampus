@@ -1,6 +1,7 @@
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcrypt");
 const Prisma=require("../../utils/prisma")
+const verifyJWT=require("../../utils/verifyJWT");
 
 const createUser = async (req,res) => {
   const name=req.body.name;
@@ -93,4 +94,26 @@ const loginUser=async(req,res)=>{
 }
 
 
-module.exports={loginUser,createUser}
+const getUserProfile=async(req,res)=>{
+  const token=req.body.token;
+  const userId=verifyJWT(token)
+  if(userId){
+    const currUser=await Prisma.user.findFirst({
+      where:{
+        id:userId
+      }
+    })
+    res.status(200)
+    res.json({
+      "user":Prisma.user
+    })
+  }else{
+    res.status(401);
+    res.json({
+      "message":"Not Authorized"
+    })
+  }
+}
+
+
+module.exports={loginUser,createUser,getUserProfile}

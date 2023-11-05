@@ -15,8 +15,8 @@ import '@stream-io/stream-chat-css/dist/css/index.css';
 const apiKey = "48kmaj4gqgva";
 
 const user = {
-  id: 'thuc',
-  name: "thuc"
+  id: localStorage.getItem("email").replace(/[^a-z0-9@]/g, ''),
+  name: localStorage.getItem("name")
 }
 const userId = user.id; 
 
@@ -25,7 +25,7 @@ const chatClient = StreamChat.getInstance(apiKey);
 if (typeof window !== 'undefined') {
   chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
 }
-const channel = chatClient.channel('messaging', 'travel', {
+const channel = chatClient.channel('messaging', 'gfcch', {
   name: 'Awesome channel about traveling',
   members: [userId]
 });
@@ -38,18 +38,23 @@ const filters = { type: 'messaging', members: {$in: [userId]}  };
 const options = { state: true, presence: true, limit: 10 };
 const sort = { last_message_at: -1, updated_at: -1 };
   
-const Inbox = () => (
-  <Chat client={chatClient}>
-    <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
-    <Channel>
-      <Window>
-        <ChannelHeader />
-        <MessageList />
-        <MessageInput focus />
-      </Window>
-      <Thread />
-    </Channel>
-  </Chat>
-);
+const Inbox = () => {
+   
+    console.log(localStorage.getItem("name"));
+    return (
+        <Chat client={chatClient}>
+            <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
+            <Channel>
+            <Window>
+                <ChannelHeader />
+                <MessageList />
+                <MessageInput focus />
+            </Window>
+            <Thread />
+            </Channel>
+        </Chat>
+    )
+  
+};
 
 export default Inbox;

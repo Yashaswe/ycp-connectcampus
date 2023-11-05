@@ -25,7 +25,7 @@ const Profile = () => {
         token: token,
       });
       setData(response.data.user);
-      console.log(data)
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
@@ -37,7 +37,7 @@ const Profile = () => {
   }, [setData]);
 
   return (
-      <Content
+    <Content
       style={{
         margin: "24px 16px 0",
         top: 0,
@@ -46,21 +46,27 @@ const Profile = () => {
         height: "100vh",
       }}
     >
-     {data? <Row gutter={16}>
-        <Col md={4} sm={24}>
-      <Card>
-        <div className="d-flex flex-column align-items-center text-center"> 
-        <Avatar size={150} src={data.profileImage} alt="Admin" />
-        <div className="mt-3">
-          <h2>{data.name}</h2>
-           <p className="text-secondary mb-1">{data.email}</p>
-        </div>
-       </div>
-      </Card>
-      </Col>
-      </Row>:<h1>Loading.....</h1>}
+      <h1>Profile</h1>
+      {data ? (
+        <Card
+          style={{
+            height: "500px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div className="d-flex flex-column align-items-center text-center">
+            <Avatar size={150} src={data.profileImage} alt="Admin" />
+            <div className="mt-3">
+              <h2>{data.name}</h2>
+              <p className="text-secondary mb-1">{data.email}</p>
+            </div>
+          </div>
+        </Card>
+      ) : (
+        <h1>Loading.....</h1>
+      )}
     </Content>
-    
   );
 };
 

@@ -10,6 +10,7 @@ import NewHelp from "./pages/NewHelp";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import UserPage from "./pages/UserPage";
+import Inbox from "./pages/Inbox";
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
@@ -23,6 +24,7 @@ function App() {
         </Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
+        <Route path = "/inbox" element = {<Inbox />}/>
       </Routes>
     </BrowserRouter>
   );

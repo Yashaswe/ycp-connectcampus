@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { EnvironmentFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Tag, Typography, Flex } from "antd";
-
+import { Link } from "react-router-dom";
 const { Meta } = Card;
 const { Text, Paragraph } = Typography;
 
-const CardPost = ({ postinfo }) => {
+const CardPost = ({ postinfo, data }) => {
   const categoryColor = {
     Pickup: "#f50",
     Medical: "#2db7f5",
@@ -17,6 +17,11 @@ const CardPost = ({ postinfo }) => {
   const handleExpand = () => {
     setShowMore(!showMore);
   };
+  function handleSubmit() {
+    const productId = data.id;
+    const productName = data.title;
+    console.log(productId)
+  }
 
   if (!postinfo) return <></>;
   return (
@@ -77,8 +82,8 @@ const CardPost = ({ postinfo }) => {
           </div>,
         ]}
       />
-
-      <Button type="primary" style={{ float: "right" }}>
+      
+      <Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
         Accept
       </Button>
     </Card>

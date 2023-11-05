@@ -15,8 +15,9 @@ export default function Signin() {
 
     try{
       const response=await axios.post("/authentication/login",obj)
-      console.log(response.data)
       if(response){
+        localStorage.setItem("email", response.data.email)
+        localStorage.setItem("name", response.data.userName)
         localStorage.setItem("authToken",response.data.accessToken)
         navigate("/")
       }

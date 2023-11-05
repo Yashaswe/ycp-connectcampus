@@ -85,4 +85,4 @@ const getProductsByCategory=async(req,res)=>{
 
 //delete the products
 
-module.exports = { createProduct }
+module.exports = { createProduct,getAllProducts }

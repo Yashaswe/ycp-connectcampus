@@ -3,6 +3,7 @@ import { EnvironmentFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Tag, Typography, Flex } from "antd";
 import axios from "axios";
 import { StreamChat } from 'stream-chat';
+import { Link } from "react-router-dom";
 
 
 const { Meta } = Card;
@@ -127,9 +128,10 @@ const CardPost = ({ postinfo, data ,handleClick}) => {
         Taken
       </Button>:postinfo.isAccepted?<Button type="primary" style={{ float: "right" }} disabled>
         Taken
-      </Button>:<Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
+        
+      </Button>:<Link to ="/inbox"><Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
         Accept
-      </Button>
+      </Button></Link>
       }
     </Card>
   );

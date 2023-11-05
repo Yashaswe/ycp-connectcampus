@@ -82,7 +82,8 @@ const UserPage = () => {
         <Layout style={{ marginLeft: 200 }}>
           <Outlet />
           <Footer style={{ textAlign: "center" }}>
-            Yashaswe, Sanij, Truc, Prabesh
+            Developed by Yashaswe, Sanij, Thuc, Prabesh
+            @Gettysburg College
           </Footer>
         </Layout>
       </Layout>

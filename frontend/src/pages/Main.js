@@ -40,7 +40,7 @@ export default function Main() {
       >
         {data.length > 0 ? (
           data.map((postinfo, index) => (
-            <CardPost postinfo={postinfo} data={data[index]} />
+            <CardPost key={postinfo.id} postinfo={postinfo} data={data[index]} />
           ))
         ) : (
           <>data is loading....</>

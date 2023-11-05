@@ -30,6 +30,7 @@ export default function NewHelp() {
       price: formData.price,
       category: formData.category,
       token: token,
+      location:formData.location
     };
     try {
       const response = await axios.post("/products/create-product", obj);

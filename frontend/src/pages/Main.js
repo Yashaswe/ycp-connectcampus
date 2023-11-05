@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { UserOutlined, MessageOutlined } from "@ant-design/icons";
 import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
 import CardPost from "../components/CardPost";
 import { PlusOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
@@ -11,9 +12,11 @@ const { Meta } = Card;
 export default function Main() {
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get("/");
-      console.log(response);
-    } catch {}
+      const response = await axios.get("/products/all-producst");
+      console.log(response.data.products);
+    } catch (err) {
+      console.log(err);
+    }
   });
   useEffect(() => {
     fetchData();

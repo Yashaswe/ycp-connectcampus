@@ -1,74 +1,66 @@
 const jwt=require("jsonwebtoken");
 const bcrypt=require("bcrypt");
-
-const cloudinary=require("cloudinary").v2;
-
-const images=[
-    "https://cdn0.iconfinder.com/data/icons/hr-business-and-finance/100/face_human_blank_user_avatar_mannequin_dummy-512.png",
-    "https://cdn.pixabay.com/photo/2014/04/03/10/32/user-310807_1280.png",
-    "https://cdn.pixabay.com/photo/2014/04/03/10/32/user-310807_1280.png",
-    "https://cdn.pixabay.com/photo/2012/04/01/18/02/golf-23794_1280.png",
-]
-
-cloudinary.config({
-    cloud_name:process.env.CLOUD_NAME,
-    api_key:process.env.API_KEY,
-    api_secret:process.env.API_SECRET
-});
-
 const Prisma=require("../../utils/prisma")
+const { StreamChat } = require("stream-chat");
 
-const createUser=async(req,res)=>{
-    console.log(req.body)
-    const name=req.body.name;
-    const email=req.body.email;
-    const password=req.body.password
-    const randomNumer=Math.floor((Math.random()*10)%4)
-    const coverImage=images[randomNumer]
+const STREAM_API_KEY = "7thzs9afbpsp";
+const STREM_PRIVATE_KEY = "e6m6h9aphvggkwjgm32hgdw6wze636et8a4kgj7jthadje5cfevuhrw6aepvvrz6";
+const streamChat = StreamChat.getInstance(STREAM_API_KEY, STREM_PRIVATE_KEY);
 
-   
-  
-    const hashedPassword= await bcrypt.hash(password,10)
-    const foundEmail=await Prisma.user.findFirst({
-        where:{
-            email:email
-        }
+const TOKEN_USER_ID_MAP = new Map();
+
+const createUser = async (req,res) => {
+  const name=req.body.name;
+  const email=req.body.email;
+  const password=req.body.password
+  const year=req.body.year;
+
+  const hashedPassword= await bcrypt.hash(password,10)
+  const foundEmail=await Prisma.user.findFirst({
+    where:{
+      email:email
+    }
+  })
+
+  if (foundEmail) {
+    res.status(403)
+    res.json({
+      "message":"Email Already Exists!"
     })
 
-    if(foundEmail){
-        res.status(403)
-        res.json({
-            "message":"Email Already Exists!"
-        })
+  } else {
+    const user=await Prisma.user.create({
+      data:{
+        name:name,
+        email:email,
+        password:hashedPassword,
+        year:year
+      }
+    });
 
-    }else{
-        const user=await Prisma.user.create({
-            data:{
-                name:name,
-                email:email,
-                password:hashedPassword,
-                profileImage:coverImage
-            }
-        })
+    //Generating an access-token
+    const accessToken=jwt.sign(
+      {
+        _id:user.id,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      {
+        'expiresIn':'30d'
+      });
 
-        //Generating an access-token
-        const accessToken=jwt.sign({
-            _id:user.id,
-        },
+    res.status(200)
+    res.json({
+      "token":accessToken,
+      "message": "Successfully Created an Account"
+    })
 
-        process.env.ACCESS_TOKEN_SECRET,
-        {
-            'expiresIn':'30d'
-        });
-        res.status(200)
-        res.json({
-            "token":accessToken,
-            "message": "Successfully Created an Account"
-        })
+    const exisitingUsers = await streamChat.queryUsers({ id: user.id });
+    if (exisitingUsers.users.length > 0) {
+      return res.status(400).send("User id already taken for streamChat");
     }
 
-    
-    
+    streamChat.upsertUser({ id: user.id, name: user.name });
+  }
 }
 
 const loginUser=async(req,res)=>{
@@ -102,6 +94,9 @@ const loginUser=async(req,res)=>{
                 "accessToken":accessToken,
                 "message":"Successfully Logged In"
             })
+
+          const token = streamChat.createToken(foundUser.id);
+          TOKEN_USER_ID_MAP.set(token, foundUser.id);
         }else{
             res.status(403);
             res.json({

@@ -12,6 +12,7 @@ import {
 } from 'stream-chat-react';
 import '@stream-io/stream-chat-css/dist/css/index.css';
 import { redirect } from 'react-router-dom';
+import Profile from './Profile'
 
 
 const Inbox = () => {
@@ -26,7 +27,7 @@ const Inbox = () => {
         const apiKey = "48kmaj4gqgva";
 
         if (!localStorage.getItem("email") || !localStorage.getItem("name")) {
-            throw new Error("asdasd");
+            return redirect('/login')
         }
         
         const user = {

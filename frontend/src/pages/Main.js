@@ -15,7 +15,6 @@ export default function Main() {
     try {
       const response = await axios.get("/products/all-products");
       setData(response.data.message);
-      console.log(response.data.message)
     } catch (err) {
       console.log(err);
     }
@@ -23,16 +22,7 @@ export default function Main() {
   useEffect(() => {
     fetchData();
   }, [setData]);
-  let postinfo = {
-    title: "Task",
-    price: 322.0,
-    description3: "sdlf",
-    description:
-      "dlghsldgjslIf you're looking for randomIf you're looIf you're looking for random paragraphs, you've come to the right place. When a random word or a random senking for random paragraphs, you've come to the right place. When a random word or a random sen paragraphs, you've come to the right place. When a random word or a random sen",
-    description2:
-      "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough, the next logical step is to find a random paragraph. We created the Random Paragraph Generator with you in mind. The process is quite simple. Choose the number of random paragraphs you'd like to see and click the button. Your chosen number of paragraphs will instantly appear.If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough, the next logical step is to find a random paragraph. We created the Random Paragraph Generator with you in mind. The process is quite simple. Choose the number of random paragraphs you'd like to see and click the button. Your chosen number of paragraphs will instantly appear.",
-    location: "Bullet Hole",
-  };
+
   return (
     <Content
       style={{
@@ -49,7 +39,9 @@ export default function Main() {
         }}
       >
         {data.length > 0 ? (
-          data.map((postinfo, index) => <CardPost postinfo={postinfo} data = {data[index]}/>)
+          data.map((postinfo, index) => (
+            <CardPost postinfo={postinfo} data={data[index]} />
+          ))
         ) : (
           <>data is loading....</>
         )}

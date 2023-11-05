@@ -25,7 +25,7 @@ const chatClient = StreamChat.getInstance(apiKey);
 if (typeof window !== 'undefined') {
   chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
 }
-const channel = chatClient.channel('messaging', 'gfcch', {
+const channel = chatClient.channel('messaging', 'sanijsdd', {
   name: 'Awesome channel about traveling',
   members: [userId]
 });
@@ -57,4 +57,4 @@ const Inbox = () => {
   
 };
 
-export default Inbox;
+// export default Inbox;

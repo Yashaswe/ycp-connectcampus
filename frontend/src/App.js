@@ -10,8 +10,7 @@ import NewHelp from "./pages/NewHelp";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import UserPage from "./pages/UserPage";
-import Profile from "./pages/Profile"
-// import Inbox from "./pages/Inbox";
+import Inbox from "./pages/Inbox";
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;

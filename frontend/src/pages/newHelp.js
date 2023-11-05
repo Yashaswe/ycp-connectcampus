@@ -16,7 +16,7 @@ export default function NewHelp() {
     location: "",
   });
 
-  const handleFormSubmit = () => {
+  const onFinish = () => {
     // You can perform actions with the form data here, e.g., send it to a server.
     console.log("Form Data:", formData);
   };
@@ -26,6 +26,7 @@ export default function NewHelp() {
       ...formData,
       [key]: value,
     });
+
   };
   return (
     <Content
@@ -61,6 +62,8 @@ export default function NewHelp() {
           style={{
             maxWidth: 1000,
           }}
+
+          onFinish={onFinish}
         >
           <Form.Item name="title">
             <Input

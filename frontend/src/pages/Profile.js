@@ -29,7 +29,6 @@ const Profile = () => {
     } catch (err) {
       console.log(err);
     }
-    setData();
   });
   useEffect(() => {
     console.log("inside");

@@ -1,12 +1,22 @@
 import React from "react";
 import { Link,useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 import { Form, Input, Button, Checkbox } from "antd";
 import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 export default function Signin() {
+  const { loginWithRedirect } = useAuth0();
   const navigate=useNavigate();
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <div>Loading ...</div>;
+  }
+  if (isAuthenticated) {
+    console.log(user);
+  }
   const onFinish = async(values) => {
     const obj={
       "email":values.email,
@@ -27,12 +37,13 @@ export default function Signin() {
   };
 
   return (
+    <div>
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100vh",
+        height: "80vh",
       }}
     >
       <Form
@@ -91,14 +102,24 @@ export default function Signin() {
               Log in!
             </Button>
             <span>
-              Don't have an account?
+              Don't have an account? {" "}
               <Link to="/signup">
                 <a href="">Sign up!</a>
               </Link>
             </span>
+            <span>
+              <Button
+                onClick={() => loginWithRedirect()}
+                style={{backgroundColor: "#8983d4", color: "#fefefe"}}
+                type="danger"
+              >
+                Log in with Auth0
+              </Button>
+            </span>
           </div>
         </Form.Item>
       </Form>
+    </div>
     </div>
   );
 }

@@ -25,7 +25,7 @@ const createProduct=async(req,res)=>{
                     title:title,
                     description:description,
                     price:price,
-                    
+                    location:location,
                     author:{
                         connect:{
                             id:currUser.id

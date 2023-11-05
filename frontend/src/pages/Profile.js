@@ -20,18 +20,22 @@ const Profile = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get("/authentication/user", {
-        token: localStorage.getItem("authToken"),
-      });
-      setData(response.data.message);
+      console.log("dataaa", localStorage.getItem("authToken"));
+      // const response = await axios.get("/authentication/user", {
+      //   token: localStorage.getItem("authToken"),
+      // });
+      // console.log(response.data);
+      // setData(response.data.message);
     } catch (err) {
       console.log(err);
     }
     setData();
   });
   useEffect(() => {
+    console.log("inside");
     fetchData();
   }, []);
+
   return (
     <Content
       style={{
@@ -46,10 +50,10 @@ const Profile = () => {
         <Col md={4} sm={24}> */}
       <Card>
         {/* <div className="d-flex flex-column align-items-center text-center"> */}
-        <Avatar size={150} src={data.profileImage} alt="Admin" />
+        {/* <Avatar size={150} src={data.profileImage} alt="Admin" /> */}
         <div className="mt-3">
-          <h2>{data.name}</h2>
-          <p className="text-secondary mb-1">{data.email}</p>
+          {/* <h2>{data.name}</h2> */}
+          {/* <p className="text-secondary mb-1">{data.email}</p> */}
         </div>
         {/* </div> */}
       </Card>

@@ -73,10 +73,10 @@ export default function Main() {
                   background: "white",
                 }}
               >
-                <CardPost postinfo={postinfo} />
-                <CardPost postinfo={postinfo} />
-                <CardPost postinfo={postinfo} />
-                <CardPost postinfo={postinfo} />
+                <CardPost key = "1" postinfo={postinfo} />
+                <CardPost key = "2" postinfo={postinfo} />
+                <CardPost key = "3" postinfo={postinfo} />
+                <CardPost key = "4" postinfo={postinfo} />
               </div>
               {/* <FloatButton onClick={() => console.log("click")} /> */}
               <Link to="/newhelp">

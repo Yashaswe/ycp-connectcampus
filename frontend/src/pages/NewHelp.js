@@ -18,9 +18,7 @@ export default function NewHelp() {
     category: "",
     location: "",
   });
-  const fetchData=useCallback((async()=>{
-    
-  }))
+  const fetchData = useCallback(async () => {});
 
   const onFinish = async () => {
     // You can perform actions with the form data here, e.g., send it to a server.

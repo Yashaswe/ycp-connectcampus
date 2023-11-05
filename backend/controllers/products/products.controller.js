@@ -65,9 +65,13 @@ const  getAllProducts=async(req,res)=>{
                 NOT:{
                     userId:userId
                 }
+            },
+            include:{
+               author:true 
             }
         }
     );
+
     res.status(200);
     res.json({
         "message":products

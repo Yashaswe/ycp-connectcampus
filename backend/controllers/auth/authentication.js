@@ -3,11 +3,22 @@ const bcrypt=require("bcrypt");
 const Prisma=require("../../utils/prisma")
 const verifyJWT=require("../../utils/verifyJWT");
 
+const images=[
+"https://xsgames.co/randomusers/avatar.php?g=pixel&key=1",
+"https://xsgames.co/randomusers/avatar.php?g=pixel&key=2",
+"https://xsgames.co/randomusers/avatar.php?g=pixel&key=3",
+"https://xsgames.co/randomusers/avatar.php?g=pixel&key=4",
+"https://xsgames.co/randomusers/avatar.php?g=pixel&key=5"
+]
+
 const createUser = async (req,res) => {
   const name=req.body.name;
   const email=req.body.email;
   const password=req.body.password
-  const year=req.body.year;
+  
+
+  const randomNumber=Math.floor((Math.random()*10)%4)
+  const imageUrl=images[randomNumber]
 
   const hashedPassword= await bcrypt.hash(password,10)
   const foundEmail=await Prisma.user.findFirst({
@@ -28,7 +39,7 @@ const createUser = async (req,res) => {
         name:name,
         email:email,
         password:hashedPassword,
-        year:year
+        profileImage:imageUrl
       }
     });
 

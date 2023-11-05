@@ -2,17 +2,15 @@ import React, { useEffect, useState } from "react";
 import { EnvironmentFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Tag, Typography, Flex } from "antd";
 import axios from "axios";
-import { StreamChat } from 'stream-chat';
+import { StreamChat } from "stream-chat";
 import { Link } from "react-router-dom";
-
 
 const { Meta } = Card;
 
 const { Text, Paragraph } = Typography;
 
-
-const CardPost = ({ postinfo, data ,handleClick}) => {
-  const [update,setUpdate]=useState(false)
+const CardPost = ({ postinfo, data, handleClick }) => {
+  const [update, setUpdate] = useState(false);
   const categoryColor = {
     Pickup: "#f50",
     Medical: "#2db7f5",
@@ -20,48 +18,41 @@ const CardPost = ({ postinfo, data ,handleClick}) => {
     Pet: "#108ee9",
     Book: "#800080",
   };
-  const [showMore, setShowMore] = useState(false);
+  const [showMore, setShowMore] = useState(true);
   const handleExpand = () => {
     setShowMore(!showMore);
   };
 
   async function handleSubmit() {
-
-    
     const productId = data.id;
     const productName = data.title;
-    
-    const token = localStorage.getItem("authToken")
-    try{
-      const response=await axios.post("/products/update-product",{
-        id:productId,
-        token:token
-      })
-      
-     
-      setUpdate(true)
-      console.log(response.data)
-      
+
+    const token = localStorage.getItem("authToken");
+    try {
+      const response = await axios.post("/products/update-product", {
+        id: productId,
+        token: token,
+      });
+
+      setUpdate(true);
+      console.log(response.data);
+
       const apiKey = "48kmaj4gqgva";
       const chatClient = StreamChat.getInstance(apiKey);
-      const userId = response.data.buyer.replace(/[^a-z0-9@]/g, '')
-      if (typeof window !== 'undefined') {
+      const userId = response.data.buyer.replace(/[^a-z0-9@]/g, "");
+      if (typeof window !== "undefined") {
         chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
       }
-      const channel = chatClient.channel('messaging', productId, {
+      const channel = chatClient.channel("messaging", productId, {
         name: productName,
-        members: [userId, response.data.seller.replace(/[^a-z0-9@]/g, '')]
+        members: [userId, response.data.seller.replace(/[^a-z0-9@]/g, "")],
       });
       // Here, 'travel' will be the channel ID
       channel.watch();
-  
-
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
   }
-
-
 
   if (!postinfo) return <></>;
   return (
@@ -122,17 +113,26 @@ const CardPost = ({ postinfo, data ,handleClick}) => {
           </div>,
         ]}
       />
-      
-      {
-        update?<Button type="primary" style={{ float: "right" }} disabled>
-        Taken
-      </Button>:postinfo.isAccepted?<Button type="primary" style={{ float: "right" }} disabled>
-        Taken
-        
-      </Button>:<Link to ="/inbox"><Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
-        Accept
-      </Button></Link>
-      }
+
+      {update ? (
+        <Button type="primary" style={{ float: "right" }} disabled>
+          Taken
+        </Button>
+      ) : postinfo.isAccepted ? (
+        <Button type="primary" style={{ float: "right" }} disabled>
+          Taken
+        </Button>
+      ) : (
+        <Link to="/inbox">
+          <Button
+            type="primary"
+            style={{ float: "right" }}
+            onClick={handleSubmit}
+          >
+            Accept
+          </Button>
+        </Link>
+      )}
     </Card>
   );
 };

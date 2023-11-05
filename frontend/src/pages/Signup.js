@@ -22,6 +22,8 @@ export default function Signup() {
       const token = response.data.token;
       if (token) {
         localStorage.setItem("authToken", token);
+        localStorage.setItem("email", values.email);
+        localStorage.setItem("name", values.name);
         navigate("/");
       }
 

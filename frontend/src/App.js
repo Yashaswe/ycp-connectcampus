@@ -13,7 +13,6 @@ import UserPage from "./pages/UserPage";
 import Inbox from "./pages/Inbox";
 import Profile from "./pages/Profile";
 import Emergency from "./pages/Emergency";
-import { Auth0Provider } from "@auth0/auth0-react";
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;

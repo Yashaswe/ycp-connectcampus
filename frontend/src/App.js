@@ -11,7 +11,6 @@ import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import UserPage from "./pages/UserPage";
 import Inbox from "./pages/Inbox";
-import Profile from "./pages/Profile"
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;

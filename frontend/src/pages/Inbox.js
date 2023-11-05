@@ -11,12 +11,13 @@ import {
   Window,
 } from 'stream-chat-react';
 import '@stream-io/stream-chat-css/dist/css/index.css';
-import { Navigate, redirect , useNavigate} from 'react-router-dom';
-import Profile from './Profile' 
+import { redirect } from 'react-router-dom';
+import Profile from './Profile'
+
+
 
 const Inbox = () => {
-    
-const apiKey = "48kmaj4gqgva";
+  const apiKey = "48kmaj4gqgva";
 
 const user = {
   id: localStorage.getItem("email").replace(/[^a-z0-9@]/g, ''),

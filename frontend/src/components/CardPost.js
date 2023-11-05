@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EnvironmentFilled } from "@ant-design/icons";
 import { Avatar, Button, Card, Tag, Typography, Flex } from "antd";
+import axios from "axios";
 import { StreamChat } from 'stream-chat';
 
 
 const { Meta } = Card;
 
 const { Text, Paragraph } = Typography;
+
 
 const CardPost = ({ postinfo, data }) => {
   const categoryColor = {
@@ -20,25 +22,44 @@ const CardPost = ({ postinfo, data }) => {
   const handleExpand = () => {
     setShowMore(!showMore);
   };
-  function handleSubmit() {
+
+  async function handleSubmit() {
+
+  
     const productId = data.id;
     const productName = data.title;
-    console.log(data)
-    console.log(localStorage.getItem("email"))
-    console.log(productId)
-    const apiKey = "48kmaj4gqgva";
-    const chatClient = StreamChat.getInstance(apiKey);
-    const userId = localStorage.getItem("email").replace(/[^a-z0-9@]/g, '')
-    if (typeof window !== 'undefined') {
-      chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
+    
+    const token = localStorage.getItem("authToken")
+    try{
+      const response=await axios.post("/products/update-product",{
+        id:productId,
+        token:token
+      })
+
+      console.log(response.data)
+      
+      const apiKey = "48kmaj4gqgva";
+      const chatClient = StreamChat.getInstance(apiKey);
+      const userId = response.data.buyer.replace(/[^a-z0-9@]/g, '')
+      if (typeof window !== 'undefined') {
+        chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
+      }
+      const channel = chatClient.channel('messaging', productId, {
+        name: productName,
+        members: [userId, response.data.seller.replace(/[^a-z0-9@]/g, '')]
+      });
+      // Here, 'travel' will be the channel ID
+      channel.watch();
+  
+
+    }catch(err){
+      console.log(err)
     }
-    const channel = chatClient.channel('messaging', productId, {
-      name: 'Awesome channel about traveling',
-      members: [userId, data.userId]
-    });
-    // Here, 'travel' will be the channel ID
-    channel.watch();
   }
+
+  useEffect(()=>{
+
+  },[])
 
   if (!postinfo) return <></>;
   return (
@@ -100,9 +121,13 @@ const CardPost = ({ postinfo, data }) => {
         ]}
       />
       
-      <Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
+      {
+        postinfo.isAccepted?<Button type="primary" style={{ float: "right" }} disabled>
+        Taken
+      </Button>:<Button type="primary" style={{ float: "right" }} onClick={handleSubmit}>
         Accept
       </Button>
+      }
     </Card>
   );
 };

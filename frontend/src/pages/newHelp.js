@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { EnvironmentOutlined, UserOutlined } from "@ant-design/icons";
@@ -18,6 +18,9 @@ export default function NewHelp() {
     category: "",
     location: "",
   });
+  const fetchData=useCallback((async()=>{
+    
+  }))
 
   const onFinish = async() => {
     // You can perform actions with the form data here, e.g., send it to a server.

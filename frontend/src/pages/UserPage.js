@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { UserOutlined, MessageOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  MessageOutlined,
+  PlusOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import NewHelp from "./NewHelp";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import Main from "./Main";
@@ -56,6 +61,23 @@ const UserPage = () => {
               </Menu.Item>
             ))}
           </Menu>
+          <Button
+            onClick={() => {
+              localStorage.clear();
+              navigate("/signup");
+            }}
+            icon={<LogoutOutlined style={{ color: "red" }} />}
+            style={{
+              right: 0,
+              // left: "50%",
+              alignItems: "center",
+              justifyContent: "center",
+              bottom: "0px",
+              position: "absolute",
+              borderRadius: "0",
+              margin: "5px",
+            }}
+          ></Button>
         </Sider>
         <Layout style={{ marginLeft: 200 }}>
           <Outlet />

@@ -20,24 +20,24 @@ const Profile = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      console.log("dataaa", localStorage.getItem("authToken"));
-      // const response = await axios.get("/authentication/user", {
-      //   token: localStorage.getItem("authToken"),
-      // });
-      // console.log(response.data);
-      // setData(response.data.message);
+      const token = localStorage.getItem("authToken");
+      const response = await axios.post("/authentication/user", {
+        token: token,
+      });
+      setData(response.data.user);
+      console.log(data)
     } catch (err) {
       console.log(err);
     }
-    setData();
   });
+
   useEffect(() => {
     console.log("inside");
     fetchData();
-  }, []);
+  }, [setData]);
 
   return (
-    <Content
+      <Content
       style={{
         margin: "24px 16px 0",
         top: 0,
@@ -46,20 +46,21 @@ const Profile = () => {
         height: "100vh",
       }}
     >
-      {/* <Row gutter={16}>
-        <Col md={4} sm={24}> */}
+     {data? <Row gutter={16}>
+        <Col md={4} sm={24}>
       <Card>
-        {/* <div className="d-flex flex-column align-items-center text-center"> */}
-        {/* <Avatar size={150} src={data.profileImage} alt="Admin" /> */}
+        <div className="d-flex flex-column align-items-center text-center"> 
+        <Avatar size={150} src={data.profileImage} alt="Admin" />
         <div className="mt-3">
-          {/* <h2>{data.name}</h2> */}
-          {/* <p className="text-secondary mb-1">{data.email}</p> */}
+          <h2>{data.name}</h2>
+           <p className="text-secondary mb-1">{data.email}</p>
         </div>
-        {/* </div> */}
+       </div>
       </Card>
-      {/* </Col>
-      </Row> */}
+      </Col>
+      </Row>:<h1>Loading.....</h1>}
     </Content>
+    
   );
 };
 

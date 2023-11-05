@@ -9,7 +9,7 @@ router.route("/login").post(loginUser)
 
 router.route("/signup").post(createUser)
 
-router.route("/user").get(getUserProfile)
+router.route("/user").post(getUserProfile)
 
 
 module.exports=router;

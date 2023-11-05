@@ -1,15 +1,69 @@
+import { useEffect } from "react";
+import { UserOutlined, MessageOutlined, PlusOutlined } from "@ant-design/icons";
+import NewHelp from "./NewHelp";
+import { Outlet, useNavigate, Link } from "react-router-dom";
+import Main from "./Main";
+import { Avatar, Menu, Button, Layout, Card, Tag, FloatButton } from "antd";
+
+const { Header, Content, Footer, Sider } = Layout;
 const UserPage = () => {
-  // const authToken = Cookies.get("_aj1");
+  let menuData = [
+    { name: "Emergency", link: "/" },
+    { name: "Find Task", link: "/" },
+    { name: "Profile", icon: <UserOutlined /> },
+    { name: "Inbox", icon: <MessageOutlined /> },
+    { name: "New Post", icon: <PlusOutlined />, link: "/newhelp" },
+  ];
+  const authToken = localStorage.getItem("authToken");
+  const navigate = useNavigate();
+  console.log(authToken, "TOKEN");
+
+  useEffect(() => {
+    if (!authToken) {
+      navigate("/signup");
+    }
+  }, []);
   return (
     <>
-      {/* {authToken ? (
-        <div className=" bg-[#fff0e5] w-[100%] flex flex-row">
-          <Main />
+      <Layout>
+        <Sider
+          breakpoint="lg"
+          collapsedWidth="0"
+          onBreakpoint={(broken) => {
+            console.log(broken);
+          }}
+          onCollapse={(collapsed, type) => {
+            console.log(collapsed, type);
+          }}
+          style={{
+            overflow: "auto",
+            height: "100vh",
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+          }}
+        >
+          <div className="demo-logo-vertical" />
+          <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
+            {menuData.map((item) => (
+              <Menu.Item>
+                <Link to={item.link}>
+                  {item.icon}
+                  <> </>
+                  {item.name}
+                </Link>
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Sider>
+        <Layout style={{ marginLeft: 200 }}>
           <Outlet />
-        </div>
-      ) : (
-        <Navigate to="/admin/signin" replace />
-      )} */}
+          <Footer style={{ textAlign: "center" }}>
+            Yashaswe, Sanij, Truc, Prabesh
+          </Footer>
+        </Layout>
+      </Layout>
     </>
   );
 };

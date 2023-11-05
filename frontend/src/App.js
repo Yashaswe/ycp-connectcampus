@@ -12,6 +12,7 @@ import Signin from "./pages/Signin";
 import UserPage from "./pages/UserPage";
 import Inbox from "./pages/Inbox";
 import Profile from "./pages/Profile";
+import Emergency from "./pages/Emergency";
 
 const { Meta } = Card;
 const { Header, Content, Footer, Sider } = Layout;
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/newhelp" element={<NewHelp />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/emergency" element={<Emergency />} />
         </Route>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />

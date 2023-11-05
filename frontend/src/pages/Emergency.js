@@ -59,6 +59,18 @@ const Emergency = () => {
         departmentName: "CUB",
         phoneNumber: "223-432-932",
       },
+      {
+        departmentName: "Health Center",
+        phoneNumber: "223-432-932",
+      },
+      {
+        departmentName: "Rite Aid",
+        phoneNumber: "223-432-232",
+      },
+      {
+        departmentName: "Emergency Contact",
+        phoneNumber: "223-234-932",
+      },
     ]);
   }, [setData]);
   console.log(data);

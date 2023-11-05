@@ -54,6 +54,7 @@ const createProduct=async(req,res)=>{
 
 
 const  getAllProducts=async(req,res)=>{
+    console.log("Printing.....")
     const products=await Prisma.product.findMany();
     res.status(200);
     res.json({

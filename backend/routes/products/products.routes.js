@@ -5,7 +5,7 @@ const {createProduct, getAllProducts}=require("../../controllers/products/produc
 
 
 router.route("/create-product").post(createProduct)
-router.route("/all-products",getAllProducts)
+router.route("/all-products").get(getAllProducts)
 
 
 module.exports=router;

@@ -10,17 +10,18 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
 export default function Main() {
+  const [data,setData]=useState([]);
   const fetchData = useCallback(async () => {
     try {
-      const response = await axios.get("/products/all-producst");
-      console.log(response.data.products);
+      const response = await axios.get("/products/all-products");
+      setData(response.data.message);
     } catch (err) {
       console.log(err);
     }
-  });
+  },[data]);
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [setData]) ;
   let postinfo = {
     title: "Task",
     price: 322.0,

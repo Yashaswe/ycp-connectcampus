@@ -97,15 +97,17 @@ const loginUser=async(req,res)=>{
 const getUserProfile=async(req,res)=>{
   const token=req.body.token;
   const userId=verifyJWT(token)
+ 
   if(userId){
     const currUser=await Prisma.user.findFirst({
       where:{
         id:userId
       }
     })
+    
     res.status(200)
     res.json({
-      "user":Prisma.user
+      "user":currUser
     })
   }else{
     res.status(401);

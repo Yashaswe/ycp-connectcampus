@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { Button, Form, Input, InputNumber, Select } from "antd";
 import { Content } from "antd/es/layout/layout";
 import { EnvironmentOutlined, UserOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { useNavigate } from "react-router";
 
 export default function NewHelp() {
+  const navigate= useNavigate()
   const [componentSize, setComponentSize] = useState("default");
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
@@ -16,9 +19,25 @@ export default function NewHelp() {
     location: "",
   });
 
-  const handleFormSubmit = () => {
+  const onFinish = async() => {
     // You can perform actions with the form data here, e.g., send it to a server.
     console.log("Form Data:", formData);
+    const token= localStorage.getItem("authToken")
+    const obj={
+      "title":formData.title,
+      "description":formData.description,
+      "price":formData.price,
+      "category":formData.category,
+      "token":token
+    }
+    try{
+      const response = await axios.post("/products/create-product",obj)
+      if(response){
+        navigate("/")
+      }
+    }catch(err){
+      console.log(err)
+    }
   };
 
   const handleInputChange = (key, value) => {
@@ -26,6 +45,7 @@ export default function NewHelp() {
       ...formData,
       [key]: value,
     });
+
   };
   return (
     <Content
@@ -61,6 +81,8 @@ export default function NewHelp() {
           style={{
             maxWidth: 1000,
           }}
+
+          onFinish={onFinish}
         >
           <Form.Item name="title">
             <Input

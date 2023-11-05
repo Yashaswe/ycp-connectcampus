@@ -8,6 +8,7 @@ const createProduct=async(req,res)=>{
     const token=req.body.token;
     const category=req.body.category;
 
+
     const userId=verifyJWT(token)
     if(userId){
         //find the user

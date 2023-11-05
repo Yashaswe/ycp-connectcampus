@@ -41,10 +41,15 @@ if (typeof window !== 'undefined') {
 // }
 const filters = { type: 'messaging', members: {$in: [userId]}  };
 const options = { state: true, presence: true, limit: 10 };
+
 const sort = { last_message_at: -1, updated_at: -1 };
 return (
   <Chat client={chatClient}>
-    <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
+  <div style={{display: "flex"}}>
+  <div>
+  <ChannelList filters={filters} options={options} showChannelSearch sort={sort} />
+  </div>
+    <div style={{width: "100%"}}>
     <Channel>
       <Window>
         <ChannelHeader />
@@ -53,6 +58,9 @@ return (
       </Window>
       <Thread />
     </Channel>
+    </div>
+ 
+    </div>
   </Chat>
 )};
 

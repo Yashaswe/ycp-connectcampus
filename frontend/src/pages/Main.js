@@ -10,7 +10,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Meta } = Card;
 
 export default function Main() {
-  const [data,setData]=useState([]);
+  const [data, setData] = useState([]);
   const fetchData = useCallback(async () => {
     try {
       const response = await axios.get("/products/all-products");
@@ -18,10 +18,10 @@ export default function Main() {
     } catch (err) {
       console.log(err);
     }
-  },[data]);
+  }, [data]);
   useEffect(() => {
     fetchData();
-  }, [setData]) ;
+  }, [setData]);
   let postinfo = {
     title: "Task",
     price: 322.0,
@@ -47,12 +47,13 @@ export default function Main() {
           background: "white",
         }}
       >
-        <CardPost postinfo={postinfo} />
-        <CardPost postinfo={postinfo} />
-        <CardPost postinfo={postinfo} />
-        <CardPost postinfo={postinfo} />
+        {data.length > 0 ? (
+          data.map((postinfo) => <CardPost postinfo={postinfo} />)
+        ) : (
+          <>data is loading....</>
+        )}
       </div>
-      {/* <FloatButton onClick={() => console.log("click")} /> */}
+
       <Link to="/newhelp">
         <FloatButton
           className="addPost"

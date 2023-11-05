@@ -14,12 +14,11 @@ import '@stream-io/stream-chat-css/dist/css/index.css';
 import { redirect } from 'react-router-dom';
 import Profile from './Profile'
 
-
 const apiKey = "48kmaj4gqgva";
 
 const user = {
-  id: 'thuc',
-  name: "thuc"
+  id: localStorage.getItem("email").replace(/[^a-z0-9@]/g, ''),
+  name: localStorage.getItem("name")
 }
 const userId = user.id; 
 
@@ -28,7 +27,7 @@ const chatClient = StreamChat.getInstance(apiKey);
 if (typeof window !== 'undefined') {
   chatClient.connectUser({ id: userId }, chatClient.devToken(userId));
 }
-const channel = chatClient.channel('messaging', 'travel', {
+const channel = chatClient.channel('messaging', 'gfcch', {
   name: 'Awesome channel about traveling',
   members: [userId]
 });
